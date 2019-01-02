@@ -2,7 +2,7 @@ require 'faraday_middleware'
 
 module Firebase
   module UseFaraday
-    def self.included(base)
+    def self.included(_base)
       remove_method :process
     end
 
@@ -10,7 +10,8 @@ module Firebase
 
     def initialize(base_uri, auth = nil)
       super
-      @connection = Faraday.new(url: @request.base_url, headers: @request.default_header) do |conn|
+      default_headers = { 'Content-Type' => 'application/json' }
+      @connection = Faraday.new(url: @request.base_url, headers: default_headers) do |conn|
         conn.request :json
         conn.response :json
         conn.adapter Faraday.default_adapter
@@ -32,12 +33,6 @@ module Firebase
       end
 
       Firebase::Response.new response
-    end
-  end
-
-  module FaradayResponse
-    def body
-      response.body
     end
   end
 end

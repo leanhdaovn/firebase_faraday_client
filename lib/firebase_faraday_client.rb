@@ -1,5 +1,6 @@
-require "firebase_faraday_client/version"
-require "firebase/use_faraday"
+require 'firebase_faraday_client/version'
+require 'firebase/use_faraday'
+require 'firebase/faraday_response'
 
 module FirebaseFaradayClient
   class Error < StandardError; end
