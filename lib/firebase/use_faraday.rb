@@ -1,3 +1,5 @@
+require 'faraday_middleware'
+
 module Firebase
   module UseFaraday
     def self.included(base)

@@ -40,7 +40,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
 
-  spec.add_runtime_dependency 'firebase', '~> 0.2.8'
   spec.add_runtime_dependency 'faraday', '~> 0.15.4'
-  spec.add_runtime_dependency 'net-http-persistent', '~> 3.0.0'
+  spec.add_runtime_dependency 'faraday_middleware', '~> 0.12.2'
+  spec.add_runtime_dependency 'firebase', '~> 0.2.8'
 end
