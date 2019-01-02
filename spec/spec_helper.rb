@@ -1,9 +1,10 @@
-require "bundler/setup"
-require "firebase_faraday_client"
+require 'bundler/setup'
+require 'firebase'
+require 'firebase_faraday_client'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
-  config.example_status_persistence_file_path = ".rspec_status"
+  config.example_status_persistence_file_path = '.rspec_status'
 
   # Disable RSpec exposing methods globally on `Module` and `main`
   config.disable_monkey_patching!
