@@ -1,8 +1,10 @@
 # FirebaseFaradayClient
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/firebase_faraday_client`. To experiment with that code, run `bin/console` for an interactive prompt.
+[![Build Status](https://travis-ci.com/leanhdaovn/firebase_faraday_client.svg?branch=master)](https://travis-ci.com/leanhdaovn/firebase_faraday_client)
 
-TODO: Delete this and the text above, and describe your gem
+[firebase](https://github.com/oscardelben/firebase-ruby/) is a great simplistic gem to interact with firebase via the REST APIs. It uses [httpclient](https://github.com/nahi/httpclient) under the hood to handle the requests. However, `httpclient` hasn't been maintained for a while. Also, in some scenario, you might want to use another client.
+
+`firebase_faraday_client` replaces it with `faraday`, so you can switch to the client of your choice easily.
 
 ## Installation
 
@@ -22,7 +24,20 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Enable during startup
+```ruby
+# config/initializers/firebase.rb
+
+FirebaseFaradayClient.use
+```
+
+Use another faraday adapter
+```ruby
+client = Firebase::Client.new('https://test.firebaseio.com/', nil)
+client.connection.options.timeout = 5
+client.connection.options.open_timeout = 2
+client.connection.adapter :net_http_persistent, pool_size: 10
+```
 
 ## Development
 
