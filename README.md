@@ -33,10 +33,11 @@ FirebaseFaradayClient.use
 
 Use another faraday adapter
 ```ruby
-client = Firebase::Client.new('https://test.firebaseio.com/', nil)
-client.connection.options.timeout = 5
-client.connection.options.open_timeout = 2
-client.connection.adapter :net_http_persistent, pool_size: 10
+client = Firebase::Client.new('https://test.firebaseio.com/', nil) do |faraday_connection|
+  faraday_connection.options.timeout = 5
+  faraday_connection.options.open_timeout = 2
+  faraday_connection.adapter :net_http_persistent, pool_size: 10
+end
 ```
 
 ## Development
