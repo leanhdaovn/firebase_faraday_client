@@ -14,7 +14,7 @@ module Firebase
       @connection = Faraday.new(url: @request.base_url, headers: default_headers) do |conn|
         conn.request :json
         conn.response :json
-        conn.adapter Faraday.default_adapter
+        yield conn if block_given?
       end
       @request = @connection
     end
