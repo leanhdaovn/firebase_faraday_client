@@ -18,17 +18,31 @@ RSpec.describe FirebaseFaradayClient do
         .and_return(mock_connection)
     end
 
-    let(:client) { Firebase::Client.new(base_url) }
+    context 'initialize faraday connection' do
+      it 'initializes without configuration block' do
+        client = Firebase::Client.new(base_url)
+        expect(client.request).to eq(client.connection)
+        expect(client.connection).to eq(mock_connection)
+        expect(mock_connection).to have_received(:request).with(:json)
+        expect(mock_connection).to have_received(:response).with(:json)
+        expect(mock_connection).not_to have_received(:adapter)
+      end
 
-    it 'uses Faraday as http client' do
-      expect(client.request).to eq(client.connection)
-      expect(client.connection).to eq(mock_connection)
-      expect(mock_connection).to have_received(:request).with(:json)
-      expect(mock_connection).to have_received(:response).with(:json)
-      expect(mock_connection).to have_received(:adapter).with(Faraday.default_adapter)
+      it 'initializes with configuration block' do
+        client = Firebase::Client.new(base_url) do |conn|
+          conn.adapter :net_http_persistent
+        end
+        expect(client.request).to eq(client.connection)
+        expect(client.connection).to eq(mock_connection)
+        expect(mock_connection).to have_received(:request).with(:json)
+        expect(mock_connection).to have_received(:response).with(:json)
+        expect(mock_connection).to have_received(:adapter).with(:net_http_persistent)
+      end
     end
 
     context 'process firebase requests' do
+      let(:client) { Firebase::Client.new(base_url) }
+
       before do
         %i[get put post patch delete].each do |http_method|
           allow(mock_connection).to receive(http_method)
